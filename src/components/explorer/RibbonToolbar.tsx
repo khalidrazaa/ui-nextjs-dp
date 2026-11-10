@@ -56,17 +56,17 @@ export const RibbonToolbar: React.FC<RibbonToolbarProps> = ({
   const [showViewMenu, setShowViewMenu] = useState(false);
 
   return (
-    <div className="bg-slate-900/90 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between text-xs text-slate-300 select-none">
+    <div className="bg-slate-900/90 border-b border-slate-800 px-2 sm:px-3 py-1.5 flex items-center justify-between text-xs text-slate-300 select-none overflow-x-auto scrollbar-none gap-2">
       {/* Primary Actions Group */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
         {/* New Folder */}
         <button
           onClick={onOpenNewFolder}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded hover:bg-slate-800 text-slate-200 transition-colors"
+          className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded hover:bg-slate-800 text-slate-200 transition-colors shrink-0"
           title="Create New Folder"
         >
           <FolderPlus className="w-4 h-4 text-amber-400" />
-          <span className="font-medium">New folder</span>
+          <span className="font-medium hidden xs:inline">New folder</span>
         </button>
 
         {/* Upload File */}

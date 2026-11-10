@@ -138,49 +138,49 @@ export const PandasAnalyticsView: React.FC<PandasAnalyticsViewProps> = ({
       </div>
 
       {/* Metric Cards KPI Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 border-b border-slate-800 bg-slate-900/30">
-        <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 p-3 sm:p-4 border-b border-slate-800 bg-slate-900/30">
+        <div className="p-2.5 sm:p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
           <span className="text-[10px] uppercase font-semibold text-slate-400">Total Rows</span>
-          <span className="text-lg font-bold text-white font-mono tabular-nums mt-0.5">
+          <span className="text-base sm:text-lg font-bold text-white font-mono tabular-nums mt-0.5">
             {profile.totalRows.toLocaleString()}
           </span>
-          <span className="text-[10px] text-emerald-400 mt-1">100% ingested into BigQuery</span>
+          <span className="text-[10px] text-emerald-400 mt-1 truncate">100% in BigQuery</span>
         </div>
 
-        <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
+        <div className="p-2.5 sm:p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
           <span className="text-[10px] uppercase font-semibold text-slate-400">Total Columns</span>
-          <span className="text-lg font-bold text-white font-mono tabular-nums mt-0.5">
+          <span className="text-base sm:text-lg font-bold text-white font-mono tabular-nums mt-0.5">
             {profile.totalColumns}
           </span>
-          <span className="text-[10px] text-slate-400 mt-1">
-            {profile.numericSummary.length} numeric · {profile.categoricalSummary.length} categorical
+          <span className="text-[10px] text-slate-400 mt-1 truncate">
+            {profile.numericSummary.length} num · {profile.categoricalSummary.length} cat
           </span>
         </div>
 
-        <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
+        <div className="p-2.5 sm:p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
           <span className="text-[10px] uppercase font-semibold text-slate-400">Memory Usage</span>
-          <span className="text-lg font-bold text-white font-mono tabular-nums mt-0.5">
+          <span className="text-base sm:text-lg font-bold text-white font-mono tabular-nums mt-0.5">
             {profile.memoryUsageKb} KB
           </span>
-          <span className="text-[10px] text-sky-400 mt-1">Optimized columnar footprint</span>
+          <span className="text-[10px] text-sky-400 mt-1 truncate">Columnar footprint</span>
         </div>
 
-        <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
+        <div className="p-2.5 sm:p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col">
           <span className="text-[10px] uppercase font-semibold text-slate-400">Target Table</span>
           <span className="text-xs font-semibold text-sky-300 font-mono truncate mt-1">
             {activeFile.targetBigQueryTable}
           </span>
           <span className="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3" /> Validated Schema
+            <CheckCircle2 className="w-3 h-3" /> Validated
           </span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-4 px-4 border-b border-slate-800 bg-slate-900/40 text-xs font-medium">
+      <div className="flex items-center gap-4 px-3 sm:px-4 border-b border-slate-800 bg-slate-900/40 text-xs font-medium overflow-x-auto scrollbar-none whitespace-nowrap">
         <button
           onClick={() => setActiveSubTab('charts')}
-          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 ${
+          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
             activeSubTab === 'charts'
               ? 'border-emerald-400 text-emerald-400 font-semibold'
               : 'border-transparent text-slate-400 hover:text-slate-200'
@@ -192,7 +192,7 @@ export const PandasAnalyticsView: React.FC<PandasAnalyticsViewProps> = ({
 
         <button
           onClick={() => setActiveSubTab('describe')}
-          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 ${
+          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
             activeSubTab === 'describe'
               ? 'border-emerald-400 text-emerald-400 font-semibold'
               : 'border-transparent text-slate-400 hover:text-slate-200'
@@ -204,7 +204,7 @@ export const PandasAnalyticsView: React.FC<PandasAnalyticsViewProps> = ({
 
         <button
           onClick={() => setActiveSubTab('head_tail')}
-          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 ${
+          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
             activeSubTab === 'head_tail'
               ? 'border-emerald-400 text-emerald-400 font-semibold'
               : 'border-transparent text-slate-400 hover:text-slate-200'

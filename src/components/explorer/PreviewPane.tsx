@@ -56,7 +56,15 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
   const headers = file.extraMetadata.headers || [];
 
   return (
-    <aside className="w-84 border-l border-slate-800 bg-slate-900/90 flex flex-col h-full text-xs text-slate-200 shrink-0 select-none overflow-y-auto">
+    <>
+      {/* Mobile backdrop */}
+      <div 
+        onClick={onClose}
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 lg:hidden"
+        aria-hidden="true"
+      />
+
+      <aside className="fixed inset-y-0 right-0 z-50 w-full sm:w-96 lg:static lg:w-80 lg:z-auto border-l border-slate-800 bg-slate-900/95 lg:bg-slate-900/90 flex flex-col h-full text-xs text-slate-200 shrink-0 select-none overflow-y-auto shadow-2xl lg:shadow-none">
       {/* Header */}
       <div className="flex items-center justify-between p-3 border-b border-slate-800 sticky top-0 bg-slate-900/95 backdrop-blur z-10">
         <div className="flex items-center gap-2 truncate">
@@ -226,5 +234,6 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
         </div>
       </div>
     </aside>
-  );
+  </>
+);
 };

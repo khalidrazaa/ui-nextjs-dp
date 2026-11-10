@@ -227,13 +227,13 @@ async def get_pandas_profile(file_id: str):
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-950 text-slate-200 select-none overflow-hidden">
       {/* Top Banner */}
-      <div className="p-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+      <div className="p-3 sm:p-4 border-b border-slate-800 bg-slate-900/60 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shadow-inner">
+          <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shadow-inner shrink-0">
             <Code2 className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-sm font-bold text-white font-display">FastAPI Automated Ingestion Engine</h2>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/20 text-sky-300 border border-sky-500/30">
                 fastapi:0.110.0 · uvicorn
@@ -245,7 +245,7 @@ async def get_pandas_profile(file_id: str):
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => {
               navigator.clipboard.writeText(pythonFastApiCode);
@@ -261,10 +261,10 @@ async def get_pandas_profile(file_id: str):
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-4 px-4 border-b border-slate-800 bg-slate-900/40 text-xs font-medium">
+      <div className="flex items-center gap-4 px-3 sm:px-4 border-b border-slate-800 bg-slate-900/40 text-xs font-medium overflow-x-auto scrollbar-none whitespace-nowrap">
         <button
           onClick={() => setActiveTab('swagger')}
-          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 ${
+          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
             activeTab === 'swagger'
               ? 'border-sky-400 text-sky-400 font-semibold'
               : 'border-transparent text-slate-400 hover:text-slate-200'
@@ -276,7 +276,7 @@ async def get_pandas_profile(file_id: str):
 
         <button
           onClick={() => setActiveTab('code')}
-          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 ${
+          className={`py-2.5 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
             activeTab === 'code'
               ? 'border-sky-400 text-sky-400 font-semibold'
               : 'border-transparent text-slate-400 hover:text-slate-200'

@@ -24,6 +24,7 @@ export default function App() {
   const [selectedCloud, setSelectedCloud] = useState<CloudProvider>('s3');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   // File & Folder Storage State
   const [folders, setFolders] = useState<FolderItem[]>(INITIAL_FOLDERS);
@@ -333,6 +334,8 @@ export default function App() {
               isMaximized={isMaximized}
               setIsMaximized={setIsMaximized}
               onRefresh={() => setSearchQuery('')}
+              onToggleSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+              isSidebarOpen={isMobileSidebarOpen}
             />
 
             {/* Ribbon Toolbar */}
@@ -364,21 +367,49 @@ export default function App() {
             />
 
             {/* Explorer Body: Left Navigation Tree + File List + Right Details Pane */}
-            <div className="flex-1 flex overflow-hidden">
-              {/* Left Navigation Tree */}
-              <NavigationTree
-                folders={folders}
-                currentFolderId={currentFolderId}
-                onSelectFolder={handleOpenFolder}
-                onSelectCloudTarget={(provider) => {
-                  setSelectedCloud(provider);
-                  // Find folder associated with this provider
-                  const matched = folders.find(f => f.storageDestination === provider);
-                  if (matched) handleOpenFolder(matched.id);
-                }}
-                onJumpToPostgres={() => setActiveTab('postgres')}
-                onJumpToBigQuery={() => setActiveTab('bigquery')}
-              />
+            <div className="flex-1 flex overflow-hidden relative">
+              {/* Mobile Drawer Backdrop & Navigation Pane */}
+              {isMobileSidebarOpen && (
+                <>
+                  <div
+                    onClick={() => setIsMobileSidebarOpen(false)}
+                    className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 md:hidden"
+                    aria-hidden="true"
+                  />
+                  <div className="fixed inset-y-0 left-0 z-50 w-64 md:hidden shadow-2xl">
+                    <NavigationTree
+                      folders={folders}
+                      currentFolderId={currentFolderId}
+                      onSelectFolder={handleOpenFolder}
+                      onSelectCloudTarget={(provider) => {
+                        setSelectedCloud(provider);
+                        const matched = folders.find(f => f.storageDestination === provider);
+                        if (matched) handleOpenFolder(matched.id);
+                        setIsMobileSidebarOpen(false);
+                      }}
+                      onJumpToPostgres={() => { setActiveTab('postgres'); setIsMobileSidebarOpen(false); }}
+                      onJumpToBigQuery={() => { setActiveTab('bigquery'); setIsMobileSidebarOpen(false); }}
+                      onCloseMobile={() => setIsMobileSidebarOpen(false)}
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Desktop Docked Left Navigation Tree */}
+              <div className="hidden md:flex shrink-0">
+                <NavigationTree
+                  folders={folders}
+                  currentFolderId={currentFolderId}
+                  onSelectFolder={handleOpenFolder}
+                  onSelectCloudTarget={(provider) => {
+                    setSelectedCloud(provider);
+                    const matched = folders.find(f => f.storageDestination === provider);
+                    if (matched) handleOpenFolder(matched.id);
+                  }}
+                  onJumpToPostgres={() => setActiveTab('postgres')}
+                  onJumpToBigQuery={() => setActiveTab('bigquery')}
+                />
+              </div>
 
               {/* Main File Canvas */}
               <FileListGrid

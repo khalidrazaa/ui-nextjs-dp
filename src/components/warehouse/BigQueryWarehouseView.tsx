@@ -84,13 +84,13 @@ export const BigQueryWarehouseView: React.FC<BigQueryWarehouseViewProps> = ({
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-950 text-slate-200 select-none overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+      <div className="p-3 sm:p-4 border-b border-slate-800 bg-slate-900/60 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shadow-inner">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shadow-inner shrink-0">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-sm font-bold text-white font-display">Google Cloud BigQuery Lakehouse</h2>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30">
                 project: omnistore-lakehouse-prod
@@ -103,12 +103,12 @@ export const BigQueryWarehouseView: React.FC<BigQueryWarehouseViewProps> = ({
         </div>
 
         {/* BigQuery Quick Switcher */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-400 font-medium">Table Target:</span>
+        <div className="flex items-center gap-2 text-xs shrink-0">
+          <span className="text-slate-400 font-medium hidden sm:inline">Table Target:</span>
           <select
             value={selectedTableId}
             onChange={(e) => setSelectedTableId(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-sky-300 font-mono font-medium focus:outline-none focus:border-blue-500"
+            className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-sky-300 font-mono font-medium focus:outline-none focus:border-blue-500 max-w-[200px] sm:max-w-none truncate"
           >
             {PREDEFINED_BIGQUERY_TABLES.map(table => (
               <option key={table.id} value={table.id}>
@@ -120,7 +120,7 @@ export const BigQueryWarehouseView: React.FC<BigQueryWarehouseViewProps> = ({
       </div>
 
       {/* Main Grid View */}
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 flex flex-col gap-4 sm:gap-6">
         {/* TOP SECTION: PREDEFINED SCHEMA & VALIDATOR */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Predefined Schema Card */}

@@ -9,7 +9,8 @@ import {
   Database, 
   Layers, 
   Star, 
-  Globe
+  Globe,
+  X
 } from 'lucide-react';
 import { FolderItem, CloudProvider } from '../../types';
 import { CLOUD_PROVIDERS_CONFIG } from '../../mock/sampleData';
@@ -21,6 +22,7 @@ interface NavigationTreeProps {
   onSelectCloudTarget: (provider: CloudProvider) => void;
   onJumpToPostgres: () => void;
   onJumpToBigQuery: () => void;
+  onCloseMobile?: () => void;
 }
 
 export const NavigationTree: React.FC<NavigationTreeProps> = ({
@@ -29,7 +31,8 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
   onSelectFolder,
   onSelectCloudTarget,
   onJumpToPostgres,
-  onJumpToBigQuery
+  onJumpToBigQuery,
+  onCloseMobile
 }) => {
   const [expandedFolderIds, setExpandedFolderIds] = useState<Set<string>>(new Set(['root', 'folder_datasets']));
   const [isQuickAccessOpen, setIsQuickAccessOpen] = useState(true);
@@ -64,7 +67,7 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
           return (
             <div key={folder.id} className="flex flex-col">
               <div
-                onClick={() => onSelectFolder(folder.id)}
+                onClick={() => handleFolderClick(folder.id)}
                 style={{ paddingLeft: `${depth * 14 + 10}px` }}
                 className={`flex items-center gap-1.5 py-1.5 pr-2 rounded-md cursor-pointer transition-colors text-xs group ${
                   isSelected 
@@ -100,8 +103,30 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
     );
   };
 
+  const handleFolderClick = (folderId: string) => {
+    onSelectFolder(folderId);
+    if (onCloseMobile) onCloseMobile();
+  };
+
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-900/60 p-2 overflow-y-auto flex flex-col gap-4 text-xs select-none shrink-0">
+    <aside className="w-64 border-r border-slate-800 bg-slate-900/90 md:bg-slate-900/60 p-2 overflow-y-auto flex flex-col gap-4 text-xs select-none shrink-0 h-full">
+      {/* Mobile Drawer Header */}
+      {onCloseMobile && (
+        <div className="flex items-center justify-between pb-2 border-b border-slate-800 md:hidden">
+          <div className="flex items-center gap-2 font-semibold text-white">
+            <HardDrive className="w-4 h-4 text-sky-400" />
+            <span>Navigation Pane</span>
+          </div>
+          <button
+            onClick={onCloseMobile}
+            aria-label="Close navigation"
+            className="p-1 rounded text-slate-400 hover:text-white"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {/* Quick Access */}
       <div>
         <div 
@@ -118,7 +143,7 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
         {isQuickAccessOpen && (
           <div className="mt-1 flex flex-col gap-0.5">
             <button
-              onClick={() => onSelectFolder('folder_sales_q1')}
+              onClick={() => handleFolderClick('folder_sales_q1')}
               className={`w-full text-left flex items-center gap-2 px-2.5 py-1.5 rounded-md hover:bg-slate-800/80 transition-colors ${
                 currentFolderId === 'folder_sales_q1' ? 'bg-sky-500/20 text-sky-200 font-semibold' : 'text-slate-300'
               }`}
@@ -127,7 +152,7 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
               <span className="truncate">sales_2026_q1</span>
             </button>
             <button
-              onClick={() => onSelectFolder('folder_datasets')}
+              onClick={() => handleFolderClick('folder_datasets')}
               className={`w-full text-left flex items-center gap-2 px-2.5 py-1.5 rounded-md hover:bg-slate-800/80 transition-colors ${
                 currentFolderId === 'folder_datasets' ? 'bg-sky-500/20 text-sky-200 font-semibold' : 'text-slate-300'
               }`}
@@ -136,7 +161,7 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
               <span className="truncate">datasets</span>
             </button>
             <button
-              onClick={() => onSelectFolder('folder_finance')}
+              onClick={() => handleFolderClick('folder_finance')}
               className={`w-full text-left flex items-center gap-2 px-2.5 py-1.5 rounded-md hover:bg-slate-800/80 transition-colors ${
                 currentFolderId === 'folder_finance' ? 'bg-sky-500/20 text-sky-200 font-semibold' : 'text-slate-300'
               }`}
@@ -217,7 +242,7 @@ export const NavigationTree: React.FC<NavigationTreeProps> = ({
         </div>
         <div className="mt-1">
           <div
-            onClick={() => onSelectFolder('root')}
+            onClick={() => handleFolderClick('root')}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md cursor-pointer transition-colors text-xs ${
               currentFolderId === 'root' ? 'bg-sky-500/20 text-sky-200 font-semibold' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
             }`}
