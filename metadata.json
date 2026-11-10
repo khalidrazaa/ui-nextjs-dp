@@ -1,0 +1,6 @@
+{
+  "name": "OmniStore & BigQuery Lakehouse",
+  "description": "Multi-cloud storage explorer with PostgreSQL cataloging, schema mapping, and automated BigQuery ingestion with Pandas profiling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
